@@ -1,0 +1,14 @@
+Welcome to the 2025 cragmas guesser!
+
+Every day a picture of the admin's archive is published, depicting a climber on a route.
+Guess the grade of the route and try to become the Cragmas-Champion 2025.
+
+Each correct guess is rewarded with 3 points.
+A deviation of one grade will be rewarded with 2 points.
+A deviation of two grades from the true grade will be rewarded with 1 point.
+The Leaderboard is always delayed by one day to keep the grades secret for the whole day.
+
+You can only guess once per day and only for the current day, so make sure to check the calendar every day.
+
+BE FAIR: only use your own name/gamertag. 
+This website doesn't use fancy login and security so don't make guesses in the name of someone else.

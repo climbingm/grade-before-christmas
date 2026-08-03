@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Christmas Calendar</title>
+  
+</head>
+
+<body>
+  <!-- Header -->
+  <h1><u>My Christmas Calendar</u></h1>
+
+  <!-- Simple error overlay for runtime errors -->
+  <div id="error-overlay" style="display:none; position:fixed; top:12px; right:12px; background:rgba(0,0,0,0.85); color:gold; padding:10px 12px; border-radius:8px; z-index:2000; max-width:320px; font-size:0.9em; box-shadow:0 6px 24px rgba(0,0,0,0.7);">
+    <div style="font-weight:700; margin-bottom:6px;">Runtime error</div>
+    <div id="error-overlay-msg" style="white-space:pre-wrap;"></div>
+  </div>
+
+  <!-- Floating action buttons (Statistics, Trend, Info) -->
+  <div class="floating-buttons">
+    <button class="stats-button" onclick="openStatsPopup()">📊</button>
+    <button class="trend-button" onclick="openTrendPopup()">📈</button>
+    <button class="info-button" onclick="openInfoPopup()">?</button>
+  </div>
+
+  <!-- Information popup -->
+  <div class="info-popup" id="infoPopup">
+    <div class="info-popup-content">
+      <span class="info-popup-close" onclick="closeInfoPopup()">×</span>
+      <div id="infoText">Loading...</div>
+    </div>
+  </div>
+
+  <!-- Trend popup for leaderboard curves -->
+  <div class="trend-popup" id="trendPopup" style="display:none;">
+    <div class="trend-popup-content">
+      <span class="info-popup-close" onclick="closeTrendPopup()">×</span>
+      <h3>Leaderboard Trend (accumulated points)</h3>
+      <canvas id="trend-canvas" width="900" height="420" style="max-width:100%; height:auto; background: rgba(0,0,0,0.6); border-radius:8px; display:block; margin:8px 0;"></canvas>
+      <div id="trend-legend" style="max-height:240px; overflow:auto; margin-top:8px; color:gold;"></div>
+    </div>
+  </div>
+
+  <!-- Stats popup for player analytics -->
+  <div class="trend-popup" id="statsPopup" style="display:none;">
+    <div class="trend-popup-content">
+      <span class="info-popup-close" onclick="closeStatsPopup()">×</span>
+      <h3>Player Statistics</h3>
+      <div style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
+        <label style="color:gold;">View:</label>
+        <label style="color:gold;"><input type="radio" name="statsView" value="table" checked> Table</label>
+        <label style="color:gold;"><input type="radio" name="statsView" value="player"> Player</label>
+        <label style="color:gold;"><input type="radio" name="statsView" value="records"> Records</label>
+        <select id="stats-player-select" style="margin-left:auto; display:none;"></select>
+      </div>
+
+      <div id="stats-table-wrap" style="max-height:420px; overflow:auto;">
+        <table id="stats-table" style="width:100%; border-collapse:collapse; color:gold;">
+          <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.06); text-align:left;"><th>Player</th><th>Mean dev</th><th>StdDev</th><th>Exact</th><th>Played</th><th>Bias</th><th>Late avg pts</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div id="stats-explanation" style="color:gold; font-size:0.9em; margin-top:8px; opacity:0.9;">
+          <strong>Explanation:</strong> <br>
+          <em>Mean dev</em>: Average deviation in grade indices (positive = overestimate, negative = underestimate).<br>
+          <em>StdDev</em>: Standard deviation of deviations (higher = more variance).<br>
+          <em>Exact</em>: Number of exact matches (guessed grade equals true grade).<br>
+          <em>Played</em>: Number of days the player participated / possible days.<br>
+          <em>Bias</em>: Tendency to over- or underestimate.<br>
+          <em>Late avg pts</em>: Average points scored from day 15 onward.
+        </div>
+      </div>
+
+      <div id="stats-player-wrap" style="display:none; color:gold;">
+        <div id="stats-player-details"></div>
+      </div>
+
+      <div id="stats-records-wrap" style="display:none; color:gold;">
+        <div id="stats-records-list"></div>
+        <div id="stats-records-explanation" style="color:gold; font-size:0.9em; margin-top:8px; opacity:0.9;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+
+  <!-- Kalender Container -->
+  <div class="calendar">
+  
+  </div>
+
+  <div class="snow">
+    
+
+  </div>
+
+  <!-- Popup für vergrößertes Bild -->
+  <div class="popup" id="popup">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <div class="popup-content">
+      <img id="popup-image" src="" alt="Großes Bild">
+      <div id="popup-grade-display" style="display: none;"></div>
+      <!-- Histogram of guesses for past days -->
+      <div id="popup-histogram" style="display: none; margin-top: 12px;"></div>
+      <div class="guess-form">
+        <input type="text" id="popup-player" placeholder="username">
+        <select id="popup-grade" aria-label="Schwierigkeitsgrad">
+          <option value="">-- Grade --</option>
+        </select>
+        <button onclick="saveScore()">Eintragen</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="scores-panel" id="ScoresPanel">
+    <h2 id="scores-title">Leaderboard</h2>
+    <div id="scores">Loading...</div>
+  </div>
+
+
+  <div id="popup-21-backdrop" class="popup-21-backdrop hidden">
+    <div id="day21-popup" class="popup-21">
+      <div id="popup-21-text">Loading...</div>
+      <button id="closePopup">understood</button>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
+
+

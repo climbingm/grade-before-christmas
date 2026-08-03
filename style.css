@@ -1,0 +1,517 @@
+/* Hintergrundbild */
+body {
+    background-image: url('images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: auto;
+    /* Erlaube Scrollen */
+    color: gold;
+}
+
+.snow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.snowflake {
+    position: absolute;
+    top: -10px;
+    color: white;
+    font-size: 1em;
+    user-select: none;
+    animation: fall-drift-rotate 8s linear infinite;
+}
+
+@keyframes fall-drift-rotate {
+    0% {
+        transform: translate(10px, -10vh) rotate(-35deg);
+    }
+
+    25% {
+        transform: translate(-5px, 20vh) rotate(80deg);
+    }
+
+    50% {
+        transform: translate(-14px, 50vh) rotate(205deg);
+    }
+
+    75% {
+        transform: translate(-17px, 80vh) rotate(275deg);
+    }
+
+    100% {
+        transform: translate(-12px, 110vh) rotate(355deg);
+    }
+}
+
+/* Überschrift */
+h1 {
+    font-size: 2em;
+    color: gold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Kalender Container */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+    width: 80%;
+    max-width: 600px;
+    padding: 10px;
+}
+
+/* Türchen */
+.door {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    border: 3px solid gold;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Transparenter Text in der Mitte */
+.door span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: gold;
+    font-size: 1.2em;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Bild im Türchen */
+.door img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    transition: transform 0.3s ease;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+/* Popup-Bereich für vergrößertes Bild */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: flex-start;
+    /* align to top so tall content isn't cropped */
+    z-index: 2000;
+    /* raised so popup appears above floating action buttons */
+    padding: 32px 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    max-width: 100vw;
+    width: 100%;
+}
+
+.popup img {
+    position: relative;
+    /* allow z-index to take effect */
+    z-index: 2010;
+    /* ensure image is above floating buttons */
+    max-width: 80vw;
+    max-height: calc(100vh - 120px);
+    /* ensure image always fits with top/bottom padding & histogram */
+    object-fit: contain;
+}
+
+/* Schließen-Button */
+.close-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 2.5em;
+    color: white;
+    cursor: pointer;
+    z-index: 2020;
+    /* keep close control above overlay and floating buttons */
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: gold;
+}
+
+.guess-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    font-size: 0.9em;
+    width: 100%;
+    max-width: 500px;
+}
+
+.guess-form input,
+.guess-form button,
+.guess-form select {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid gold;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: gold;
+}
+
+.guess-form input::placeholder {
+    color: rgba(212, 175, 55, 0.7);
+}
+
+.guess-form button {
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.guess-form button:hover:not(:disabled) {
+    background-color: gold;
+    color: black;
+}
+
+.guess-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Highscores panel to improve readability over background */
+.scores-panel {
+    background: rgba(0, 0, 0, 0.5);
+    /* 50% transparent dark panel */
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: gold;
+    max-width: 80%;
+    width: 80%;
+    box-sizing: border-box;
+    margin-top: 12px;
+    text-align: center;
+    backdrop-filter: blur(2px);
+}
+
+.scores-panel.frozen {
+    background: rgba(39, 80, 192, 0.55);
+    /* 50% transparent dark panel */
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: rgba(255, 217, 0, 0.64);
+    max-width: 80%;
+    width: 80%;
+    box-sizing: border-box;
+    margin-top: 12px;
+    text-align: center;
+    backdrop-filter: blur(2px);
+}
+
+.scores-panel #scores {
+    margin-top: 8px;
+    text-align: left;
+    max-height: 240px;
+    overflow: auto;
+}
+
+/* Floating action buttons container in bottom-right corner */
+.floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    /* stack buttons vertically */
+    gap: 12px;
+    /* smooth spacing between buttons */
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Unified style for floating buttons */
+.floating-buttons button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 215, 0, 0.95);
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.95;
+}
+
+/* Info button slightly smaller and with distinct color */
+.info-button {
+    width: 40px;
+    height: 40px;
+    background-color: gold;
+    opacity: 0.9;
+}
+
+.info-button:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.info-button:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+/* Information popup */
+.info-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+}
+
+.info-popup-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid gold;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    color: gold;
+    font-size: 1em;
+    line-height: 1.6;
+    position: relative;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Trend popup content (uses same general style as info popup) */
+.trend-popup-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid gold;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 92%;
+    max-height: 92%;
+    overflow: auto;
+    color: gold;
+    font-size: 0.95em;
+    line-height: 1.4;
+    position: relative;
+    text-align: left;
+}
+
+.trend-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.trend-popup-content h3 {
+    margin: 0 0 8px 0;
+}
+
+#trend-legend .legend-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 4px 0;
+}
+
+#trend-legend .legend-color {
+    width: 18px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+#trend-legend .legend-label {
+    color: gold;
+    font-size: 0.95em;
+}
+
+#trend-legend .color-input {
+    width: 28px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+#trend-legend .legend-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+/* Stats popup */
+#stats-table td,
+#stats-table th {
+    padding: 6px 8px;
+}
+
+#stats-table tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.info-popup-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    color: gold;
+}
+
+.info-popup-close:hover {
+    color: white;
+}
+
+.popup-21-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(9, 0, 37, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-21-backdrop.hidden {
+    display: none;
+}
+
+.popup-21 {
+    background: rgba(39, 80, 192, 0.8);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+/* Histogram styles */
+.histogram {
+    /* Constrain histogram width to match popup image max width */
+    width: min(80vw, 640px);
+    margin: 8px auto 0 auto;
+}
+
+.histogram-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+}
+
+.histogram-label {
+    width: 56px;
+    font-size: 0.95em;
+    color: rgba(255, 215, 0, 0.9);
+    text-align: left;
+}
+
+.histogram-bar {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    height: 14px;
+    position: relative;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.histogram-fill {
+    background: rgba(255, 215, 0, 0.95);
+    height: 100%;
+    width: 0%;
+    transition: width 300ms ease;
+}
+
+.histogram-true .histogram-fill {
+    /* Highlight true grade with a distinct color */
+    background: linear-gradient(90deg, rgba(0, 200, 120, 0.98), rgba(0, 180, 100, 0.95));
+    box-shadow: 0 0 6px rgba(0, 200, 120, 0.35);
+}
+
+.histogram-true .histogram-label {
+    font-weight: 700;
+    color: rgb(0, 200, 120);
+}
+
+.histogram-true .histogram-bar {
+    flex: 1;
+    background: rgba(0, 200, 120, 0.2);
+    height: 14px;
+    position: relative;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.histogram-count {
+    width: 36px;
+    text-align: right;
+    font-size: 0.9em;
+    color: gold;
+}
