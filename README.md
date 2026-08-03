@@ -4,9 +4,7 @@ This project is a small, browser-based advent calendar app. It was intended to s
 It is a just for fun project. Cheating is very easy with some computer skills and so far no attempts to secure the app from it have been undertaken (see section on cheating).
 
 
-![Christmas Calendar](.doc/Intro.jpg)
-
-![Guessing the Route Grade](.doc/Guessing.jpg)
+![Christmas Calendar](.doc/Intro Image.jpg)
 
 ## Quick start
 
