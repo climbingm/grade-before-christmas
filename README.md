@@ -4,7 +4,7 @@ This project is a small, browser-based advent calendar app. It was intended to s
 It is a just for fun project. Cheating is very easy with some computer skills and so far no attempts to secure the app from it have been undertaken (see section on cheating).
 
 
-![Christmas Calendar](.doc/Intro Image.png)
+![Christmas Calendar](.doc/IntroImage.png)
 
 ## Quick start
 
