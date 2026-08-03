@@ -3,8 +3,8 @@
 This project is a small, browser-based advent calendar app. It was intended to share pictures of climbs I took and let my friends guess the grades of the routes displayed. The guesses are stored in a Baserow from which a leaderboard and additional statistics are created and displayed.
 It is a just for fun project. Cheating is very easy with some computer skills and so far no attempts to secure the app from it have been undertaken (see section on cheating).
 
+https://github.com/user-attachments/assets/da990017-8c1f-490a-aa97-8fd60dd97092
 
-![Christmas Calendar](.doc/IntroImage.png)
 
 ## Quick start
 
